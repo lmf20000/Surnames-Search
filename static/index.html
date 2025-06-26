@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百家姓搜索引擎</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- PWA 应用清单: 定义应用名称、图标、颜色等 -->
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <h1>百家姓搜索引擎</h1>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="输入姓氏进行高亮搜索...">
+        </div>
+        <div id="surnamesContainer" class="surnames-container"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 lmfei@163.com. All Rights Reserved.</p>
+    </footer>
+
+    <!-- PWA Service Worker 注册脚本 -->
+    <script>
+        // 检查浏览器是否支持 Service Worker
+        if ('serviceWorker' in navigator) {
+            // 页面加载完成后，注册 Service Worker 以实现离线访问
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js').then(registration => {
+                    console.log('ServiceWorker 注册成功，作用域为: ', registration.scope);
+                }).catch(err => {
+                    console.log('ServiceWorker 注册失败: ', err);
+                });
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html> 
