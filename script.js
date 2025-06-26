@@ -1,7 +1,8 @@
 // 等待 DOM 完全加载后再执行脚本
 document.addEventListener('DOMContentLoaded', function() {
-    // 获取输入框和姓氏容器的 DOM 元素引用
+    // 获取输入框、查询按钮和姓氏容器的 DOM 元素引用
     const input = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
     const container = document.getElementById('surnamesContainer');
 
     // 百家姓列表，包含单姓和复姓
@@ -73,8 +74,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    input.addEventListener('input', search);
+    // 为查询按钮添加 click 事件监听
+    searchBtn.addEventListener('click', search);
 
-    // Initial population
+    // 为输入框添加 keydown 事件监听，实现按回车键查询
+    input.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            search();
+        }
+    });
+
+    // 页面加载后，立即执行一次渲染，显示所有姓氏
     renderSurnames();
 }); 
