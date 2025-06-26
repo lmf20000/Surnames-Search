@@ -67,7 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (firstMatch) {
-            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstMatch.scrollIntoView({ behavior: 'auto', block: 'center' });
+        } else if (query) {
+            alert(`未能查询到姓氏: "${query}"`);
         }
     }
 
