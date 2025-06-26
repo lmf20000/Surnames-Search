@@ -1,19 +1,20 @@
 {
   "name": "来搜百家姓",
   "short_name": "来搜姓",
-  "start_url": "index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#fda085",
   "theme_color": "#f6d365",
   "description": "一个简洁的百家姓搜索工具",
   "icons": [
     {
-      "src": "./images/icon-192x192.png",
+      "src": "images/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./images/icon-512x512.png",
+      "src": "images/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
