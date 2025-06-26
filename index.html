@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>百家姓搜索引擎</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
     <!-- PWA 应用清单: 定义应用名称、图标、颜色等 -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="./manifest.json">
 </head>
 <body>
     <div class="container">
@@ -27,7 +27,7 @@
         if ('serviceWorker' in navigator) {
             // 页面加载完成后，注册 Service Worker 以实现离线访问
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js').then(registration => {
+                navigator.serviceWorker.register('./service-worker.js').then(registration => {
                     console.log('ServiceWorker 注册成功，作用域为: ', registration.scope);
                 }).catch(err => {
                     console.log('ServiceWorker 注册失败: ', err);
@@ -35,6 +35,6 @@
             });
         }
     </script>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html> 
