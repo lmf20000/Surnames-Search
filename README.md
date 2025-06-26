@@ -25,12 +25,12 @@
 
 1.  **获取代码**: Fork 本仓库，或直接下载代码。
 2.  **自定义 (可选)**:
-    -   修改 `static/script.js` 中的 `surnames` 数组来更改姓氏列表。
-    -   替换 `static/images/` 目录下的 `icon-192x192.png` 和 `icon-512x512.png` 图标。
-    -   修改 `static/manifest.json` 文件中的应用名称、颜色等信息。
-    -   在 `static/index.html` 中更新您的页脚版权信息。
+    -   修改 `script.js` 中的 `surnames` 数组来更改姓氏列表。
+    -   替换 `images/` 目录下的图标 (`icon-*.png`) 和应用截图 (`screenshot*.png`)。
+    -   修改 `manifest.json` 文件中的应用名称、颜色等信息。
+    -   在 `index.html` 中更新您的页脚版权信息。
 3.  **部署到 GitHub Pages**:
-    -   将您修改后的所有文件（即 `static` 文件夹内的**全部内容**）上传到您自己的 GitHub 仓库的 `main` 分支。
+    -   将您修改后的所有文件上传到您自己的 GitHub 仓库的 `main` 分支。
     -   进入仓库的 `Settings` -> `Pages`。
     -   在 `Build and deployment` -> `Branch` 部分，选择 `main` 分支和 `/ (root)` 目录，然后点击 `Save`。
     -   等待几分钟，GitHub 会为您生成一个公开的网站链接。
@@ -39,15 +39,18 @@
 
 ```
 /
-└── static/
-    ├── images/
-    │   ├── icon-192x192.png  (PWA 图标)
-    │   └── icon-512x512.png  (PWA 图标)
-    ├── index.html            (应用主页面)
-    ├── manifest.json         (PWA 配置文件)
-    ├── script.js             (核心交互逻辑和姓氏数据)
-    ├── service-worker.js     (实现离线功能的脚本)
-    └── style.css             (应用样式)
+├── images/
+│   ├── icon-192x192.png  (PWA 图标 - 192x192)
+│   ├── icon-512x512.png  (PWA 图标 - 512x512)
+│   ├── screenshot1.png   (PWA 安装界面截图 - 手机)
+│   └── screenshot2.png   (PWA 安装界面截图 - 桌面)
+├── .nojekyll             (禁用 GitHub Pages 的 Jekyll 构建)
+├── index.html            (应用主页面)
+├── manifest.json         (PWA 配置文件)
+├── script.js             (核心交互逻辑和姓氏数据)
+├── service-worker.js     (实现离线功能的脚本)
+├── style.css             (应用样式)
+└── README.md             (项目说明文档)
 ```
 
 ## © 版权信息
