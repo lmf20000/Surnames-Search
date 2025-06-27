@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const input = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
     const container = document.getElementById('surnamesContainer');
+    // 获取自定义弹窗相关元素
+    const customModal = document.getElementById('customModal');
+    const customModalMsg = document.getElementById('customModalMsg');
+    const customModalBtn = document.getElementById('customModalBtn');
 
     // 百家姓列表，包含单姓和复姓
     const surnames = [
@@ -55,30 +59,48 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * 搜索并高亮匹配的姓氏，若无匹配则弹窗提示
+     * 显示自定义弹窗
+     */
+    function showModal(msg) {
+        customModalMsg.textContent = msg;
+        customModal.style.display = 'flex';
+    }
+    // 关闭弹窗
+    customModalBtn.onclick = function() {
+        customModal.style.display = 'none';
+    };
+    // 支持点击弹窗外区域关闭
+    customModal.onclick = function(e) {
+        if (e.target === customModal) customModal.style.display = 'none';
+    };
+
+    /**
+     * 搜索并只高亮第一个匹配的姓氏，若无匹配则弹窗提示
      */
     function search() {
         const query = input.value.trim();
         const surnameElements = container.getElementsByClassName('surname');
         let firstMatch = null; // 记录第一个匹配项
 
-        // 遍历所有姓氏元素，进行高亮或取消高亮
+        // 先移除所有高亮
+        for (let el of surnameElements) {
+            el.classList.remove('highlight');
+        }
+
+        // 遍历所有姓氏元素，找到第一个匹配项
         for (let el of surnameElements) {
             if (query && el.textContent.includes(query)) {
-                el.classList.add('highlight');
-                if (!firstMatch) {
-                    firstMatch = el;
-                }
-            } else {
-                el.classList.remove('highlight');
+                firstMatch = el;
+                break;
             }
         }
 
-        // 有匹配则跳转到第一个匹配项，否则弹窗提示
+        // 只高亮并跳转到第一个匹配项
         if (firstMatch) {
+            firstMatch.classList.add('highlight');
             firstMatch.scrollIntoView({ behavior: 'auto', block: 'center' });
         } else if (query) {
-            alert(`未能查询到姓氏: "${query}"`);
+            showModal(`未能查询到姓氏：<${query}>，请检查输入或尝试其他拼写。`);
         }
     }
 
