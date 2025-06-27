@@ -1,4 +1,6 @@
 // 等待 DOM 完全加载后再执行脚本
+// 本脚本实现百家姓搜索功能，只有点击"查询"按钮或按回车键时才会触发搜索
+
 document.addEventListener('DOMContentLoaded', function() {
     // 获取输入框、查询按钮和姓氏容器的 DOM 元素引用
     const input = document.getElementById('searchInput');
@@ -45,17 +47,22 @@ document.addEventListener('DOMContentLoaded', function() {
         "西门", "伯赏", "南宫", "第五"
     ];
 
-    // 1. Initial render
+    /**
+     * 渲染所有姓氏到页面
+     */
     function renderSurnames() {
         container.innerHTML = surnames.map(s => `<span class="surname">${s}</span>`).join('');
     }
 
-    // 2. Search and highlight
+    /**
+     * 搜索并高亮匹配的姓氏，若无匹配则弹窗提示
+     */
     function search() {
         const query = input.value.trim();
         const surnameElements = container.getElementsByClassName('surname');
-        let firstMatch = null;
+        let firstMatch = null; // 记录第一个匹配项
 
+        // 遍历所有姓氏元素，进行高亮或取消高亮
         for (let el of surnameElements) {
             if (query && el.textContent.includes(query)) {
                 el.classList.add('highlight');
@@ -67,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        // 有匹配则跳转到第一个匹配项，否则弹窗提示
         if (firstMatch) {
             firstMatch.scrollIntoView({ behavior: 'auto', block: 'center' });
         } else if (query) {
@@ -74,16 +82,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 为查询按钮添加 click 事件监听
+    // 绑定"查询"按钮点击事件
     searchBtn.addEventListener('click', search);
 
-    // 为输入框添加 keydown 事件监听，实现按回车键查询
+    // 绑定输入框回车事件
     input.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             search();
         }
     });
 
-    // 页面加载后，立即执行一次渲染，显示所有姓氏
+    // 页面加载后渲染所有姓氏
     renderSurnames();
 }); 
