@@ -1,5 +1,5 @@
 // 等待 DOM 完全加载后再执行脚本
-// 本脚本实现百家姓搜索功能，只有点击"查询"按钮或按回车键时才会触发搜索
+// 本脚本实现百家姓搜索功能，增强PWA适配性，自动检测浏览器并引导用户添加到主屏幕/桌面
 
 document.addEventListener('DOMContentLoaded', function() {
     // 获取输入框、查询按钮和姓氏容器的 DOM 元素引用
@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const customModal = document.getElementById('customModal');
     const customModalMsg = document.getElementById('customModalMsg');
     const customModalBtn = document.getElementById('customModalBtn');
+    // 获取PWA引导条相关元素
+    const pwaGuideBar = document.getElementById('pwaGuideBar');
+    const pwaGuideMsg = document.getElementById('pwaGuideMsg');
+    const pwaGuideClose = document.getElementById('pwaGuideClose');
 
     // 百家姓列表，包含单姓和复姓
     const surnames = [
@@ -73,6 +77,55 @@ document.addEventListener('DOMContentLoaded', function() {
     customModal.onclick = function(e) {
         if (e.target === customModal) customModal.style.display = 'none';
     };
+
+    /**
+     * PWA 适配性检测与引导
+     */
+    function isInStandaloneMode() {
+        // 判断是否已安装为PWA
+        return (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true);
+    }
+    function isWeixinOrQQ() {
+        const ua = navigator.userAgent.toLowerCase();
+        return ua.indexOf('micromessenger') !== -1 || ua.indexOf('qq/') !== -1;
+    }
+    function isAndroid() {
+        return /android/i.test(navigator.userAgent);
+    }
+    function isIOS() {
+        return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+    function isSafari() {
+        return /safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent);
+    }
+    function isChrome() {
+        return /chrome/i.test(navigator.userAgent) && !/edge/i.test(navigator.userAgent);
+    }
+    function isEdge() {
+        return /edg/i.test(navigator.userAgent);
+    }
+    function showPwaGuide(msg) {
+        pwaGuideMsg.innerHTML = msg;
+        pwaGuideBar.style.display = 'flex';
+    }
+    pwaGuideClose.onclick = function() {
+        pwaGuideBar.style.display = 'none';
+    };
+
+    // 只在未安装PWA时显示引导
+    if (!isInStandaloneMode()) {
+        if (isWeixinOrQQ()) {
+            showPwaGuide('当前浏览器不支持"添加到主屏幕"功能，请点击右上角菜单，选择"在浏览器中打开"，再用 Chrome 或 Safari 访问本网站以获得最佳体验。');
+        } else if (isAndroid() && isChrome()) {
+            showPwaGuide('点击浏览器右上角菜单，选择"添加到主屏幕"或"安装应用"，即可像App一样使用。');
+        } else if (isIOS() && isSafari()) {
+            showPwaGuide('点击底部分享按钮，选择"添加到主屏幕"，即可像App一样使用。');
+        } else if (isEdge()) {
+            showPwaGuide('点击地址栏右侧"安装"图标，可将本应用安装到桌面。');
+        } else {
+            showPwaGuide('如需获得最佳体验，建议使用 Chrome、Edge 或 Safari 浏览器，并通过菜单添加到主屏幕/桌面。');
+        }
+    }
 
     /**
      * 搜索并只高亮第一个匹配的姓氏，若无匹配则弹窗提示
